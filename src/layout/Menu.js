@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDroplet } from '@fortawesome/free-solid-svg-icons';
 
 
+
 export default function Menu(){
     return(
         <div className="flex flex-col bg-blue-950 fixed h-lvh p-10 gap-20 top-0 left-0">
@@ -15,10 +16,11 @@ export default function Menu(){
                     <h2 className="font-light">Distribuidora CAF</h2>
                 </div>
             </section>
-            <Nav title='Produtos (F1)' name='bottle'></Nav>
-            <Nav title='Cliente (F2)' name='user'></Nav>
-            <Nav title='Pagamento (F3)' name='coin'></Nav>
-            <Nav title='Finalizar (F4)' name='check'></Nav>
+            <Nav title='Página Inicial (F5)' name='home' to='/'></Nav>
+            <Nav title='Produtos (F1)' name='bottle' to='/produtos'></Nav>
+            <Nav title='Cliente (F2)' name='user' to='/clientes'></Nav>
+            <Nav title='Pagamento (F3)' name='coin' to='/pagamento'></Nav>
+            <Nav title='Finalizar (F4)' name='check' to='/finalizar'></Nav>
         </div>
     )
 }
