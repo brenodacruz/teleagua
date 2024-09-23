@@ -1,5 +1,4 @@
 
-
 export default function Home(){
     return(
         <div className="grid grid-cols-2 h-screen w-screen pl-[270px]">
