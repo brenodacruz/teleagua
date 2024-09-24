@@ -10,6 +10,9 @@ import Home from './pages/Home';
 
 import CadastrarProduto from './pages/CadastrarProduto';
 import CadastrarCliente from './pages/CadastrarCliente';
+import KeyboardNavigation from './pages/Atalhos';
+
+
 
 function App() {
   return (
@@ -17,6 +20,8 @@ function App() {
       <div className="font-oswald grid-cols-2">
         <Header />
         <Menu />
+
+        <KeyboardNavigation />
 
         <Routes>
           <Route path='/' element={<Home />} />
