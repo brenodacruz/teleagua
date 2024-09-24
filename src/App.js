@@ -11,7 +11,7 @@ import Home from './pages/Home';
 function App() {
   return (
     <Router>
-      <div className="font-oswald">
+      <div className="font-oswald grid-cols-2">
         <Header />
         <Menu />
 
