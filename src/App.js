@@ -8,6 +8,9 @@ import Pagamento from './pages/Pagamento';
 import Finalizar from './pages/Finalizar';
 import Home from './pages/Home';
 
+import CadastrarProduto from './pages/CadastrarProduto';
+import CadastrarCliente from './pages/CadastrarCliente';
+
 function App() {
   return (
     <Router>
@@ -21,6 +24,8 @@ function App() {
           <Route path='/clientes' element={<Clientes />} />
           <Route path='/pagamento' element={<Pagamento />} />
           <Route path='/finalizar' element={<Finalizar />} />
+          <Route path='/cadastrarproduto' element={<CadastrarProduto />} />
+          <Route path='/cadastrarcliente' element={<CadastrarCliente />} />
         </Routes>
       </div>
     </Router>

@@ -1,10 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import  { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import ClientesComp from "../components/ClientesComp";
+import { Link } from "react-router-dom";
 
 export default function Clientes() {
     return (
         <div className="flex flex-col h-screen w-full justify-start items-start pl-[270px] pt-[68px]">
+            
             <div className="flex items-center border-2 border-black w-full h-10">
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 <input
@@ -13,6 +16,10 @@ export default function Clientes() {
                     className="flex-1 h-full border-none p-2"
                 />
             </div>
+            <Link to='/cadastrarcliente' className="flex flex-row justify-between bg-gray-200 text-black w-full px-10 items-center gap-5 cursor-pointer hover:bg-gray-400 py-2">
+                    <h1>Cadastrar Novo Cliente (F6)</h1>
+                    <FontAwesomeIcon icon={faSquarePlus}/>
+            </Link>
             <div className="flex flex-row w-full bg-black text-white justify-between px-36">
                 <h1>Nome:</h1>
                 <h1>Endereço:</h1>
