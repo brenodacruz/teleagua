@@ -3,8 +3,13 @@ import ProdutosSelecionados from "../components/ProdutosSelecionados";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import produtosLista from "../produtos.json"; // Importando o JSON com a lista de produtos
+import React, { useState } from "react"; // Importando useState
 
 export default function Produtos(){
+
+    const [produtos, setProdutos] = useState(produtosLista)
+
     return(
         <div className="grid grid-cols-[1fr_auto] h-screen w-screen pl-[270px] pt-[68px]">
             <section className="flex flex-col items-center justify-start border-r-2 border-black">
@@ -13,10 +18,16 @@ export default function Produtos(){
                     <FontAwesomeIcon icon={faSquarePlus}/>
                 </Link>
                 
-                <ListaProdutos texto="Água - Porta" valor="15,00" alt="Icone"/>
-                <ListaProdutos texto="Água - Perto" valor="18,00" alt="Icone"/>
-                <ListaProdutos texto="Água - Longe" valor="19,00" alt="Icone"/>
-                <ListaProdutos texto="Galão 20L" valor="24,00" alt="Icone"/>
+                {/* Mapeando sobre a lista de produtos e renderizando o componente ListaProdutos */}
+                {produtos.map(produto => (
+                    <ListaProdutos 
+                        key={produto.id} // Usando o ID como chave
+                        texto={produto.nome} 
+                        valor={produto.valor} 
+                        estoque={produto.estoque} 
+                        alt="Icone" 
+                    />
+                ))}
 
             </section>
             <section className="flex flex-col items-center justify-start">

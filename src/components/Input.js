@@ -3,8 +3,9 @@ export default function Input(props){
         <input 
         placeholder={props.placeholder}
         type={props.type}
-        name={props.name}
+        value={props.value}
         className="rounded-xl px-5 py-2 w-96"
+        onChange={props.onChange}
         ></input>
     )
 }
