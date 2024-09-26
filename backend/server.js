@@ -1,7 +1,10 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors'); // Importa o pacote cors
+
 const app = express();
+app.use(cors()); // Permite requisições CORS
 
 // Middleware para permitir o uso de JSON no corpo das requisições
 app.use(express.json());
@@ -41,7 +44,7 @@ app.post('/produtos', (req, res) => {
             res.send(novoProduto);
         });
     });
-});
+});""
 
 // Inicia o servidor
 const PORT = 5000;

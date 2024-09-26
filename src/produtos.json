@@ -1,20 +1,44 @@
 [
-    {
-        "id": 1,
-        "nome": "Água - Porta",
-        "valor": 15.0,
-        "estoque": 99
-    },
-    {
-        "id": 2,
-        "nome": "Água - Perto",
-        "valor": 18.0,
-        "estoque": 50
-    },
-    {
-        "id": 3,
-        "nome": "Água - Longe",
-        "valor": 19.53,
-        "estoque": 999
-    }
+  {
+    "id": 1,
+    "nome": "Água - Porta",
+    "valor": 15,
+    "estoque": 99
+  },
+  {
+    "id": 2,
+    "nome": "Água - Perto",
+    "valor": 18,
+    "estoque": 50
+  },
+  {
+    "id": 3,
+    "nome": "Água - Longe",
+    "valor": 19.53,
+    "estoque": 999
+  },
+  {
+    "nome": "Breno",
+    "valor": 3,
+    "estoque": 555,
+    "id": 4
+  },
+  {
+    "nome": "aaaaaaaa",
+    "valor": 99,
+    "estoque": 999,
+    "id": 5
+  },
+  {
+    "nome": "bbb",
+    "valor": 6,
+    "estoque": 67,
+    "id": 6
+  },
+  {
+    "nome": "hjkj",
+    "valor": 55,
+    "estoque": 55,
+    "id": 7
+  }
 ]

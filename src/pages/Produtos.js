@@ -11,7 +11,7 @@ export default function Produtos(){
     const [produtos, setProdutos] = useState(produtosLista)
 
     return(
-        <div className="grid grid-cols-[1fr_auto] h-screen w-screen pl-[270px] pt-[68px]">
+        <div className="grid grid-cols-[1fr_auto] h-screen w-full pl-[270px] pt-[68px]">
             <section className="flex flex-col items-center justify-start border-r-2 border-black">
                 <Link to='/cadastrarproduto' className="flex flex-row justify-between bg-black text-white w-full px-10 items-center gap-5 cursor-pointer hover:bg-gray-800 py-2">
                     <h1>Cadastrar Novo Produto (F6)</h1>

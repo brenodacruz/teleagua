@@ -1,20 +1,61 @@
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import MoneyInput from "../components/MoneyInput";
-import produtosLista from "../produtos.json";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function CadastrarProduto() {
-    const [produtos, setProdutos] = useState(produtosLista);
+    const [produtos, setProdutos] = useState([]);
     const [novoProduto, setNovoProduto] = useState({ nome: '', valor: '', estoque: '' });
 
-    const adicionarProduto = () => {
-        const id = produtos.length + 1;
-        const produto = { ...novoProduto, id };
-        setProdutos([...produtos, produto]);
-        setNovoProduto({ nome: '', valor: '', estoque: '' }); // Limpa o formulário após adicionar
-        console.log(produtos); // Log dos produtos para ver se o novo foi adicionado
-    }
+    const buscarProdutos = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/produtos'); // URL do seu servidor
+            const data = await response.json();
+            setProdutos(data);
+        } catch (error) {
+            console.error("Erro ao buscar produtos:", error);
+        }
+    };
+
+    useEffect(() => {
+        buscarProdutos(); // Chama a função quando o componente é montado
+    }, []);
+
+    const adicionarProduto = async () => {
+        // Verifica se todos os campos estão preenchidos
+        if (!novoProduto.nome || !novoProduto.valor || !novoProduto.estoque) {
+            alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        // Formata os valores
+        const produto = {
+            nome: novoProduto.nome,
+            valor: parseFloat(novoProduto.valor),
+            estoque: parseInt(novoProduto.estoque, 10),
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/produtos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(produto),
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao adicionar produto");
+            }
+
+            const data = await response.json();
+            setProdutos([...produtos, data]); // Atualiza a lista de produtos com o novo
+            setNovoProduto({ nome: '', valor: '', estoque: '' }); // Limpa o formulário após adicionar
+            console.log("Produto adicionado:", data); // Log do produto adicionado
+        } catch (error) {
+            console.error("Erro ao adicionar produto:", error);
+        }
+    };
 
     return (
         <div className="flex flex-col h-screen w-full justify-center items-center pl-[270px] pt-[68px] gap-10 bg-gray-300">
