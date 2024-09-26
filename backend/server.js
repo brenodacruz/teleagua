@@ -26,7 +26,6 @@ app.get('/produtos', (req, res) => {
 app.post('/produtos', (req, res) => {
     const novoProduto = req.body;
 
-    // Lê o arquivo JSON
     fs.readFile(produtosFilePath, 'utf8', (err, data) => {
         if (err) {
             return res.status(500).send('Erro ao ler arquivo de produtos');
@@ -36,15 +35,41 @@ app.post('/produtos', (req, res) => {
         novoProduto.id = produtos.length + 1; // Adiciona ID ao novo produto
         produtos.push(novoProduto);
 
-        // Escreve de volta no arquivo JSON
         fs.writeFile(produtosFilePath, JSON.stringify(produtos, null, 2), (err) => {
             if (err) {
                 return res.status(500).send('Erro ao salvar produto');
             }
-            res.send(novoProduto);
+            res.status(201).send(novoProduto); // Retorna 201 Created
         });
     });
-});""
+});
+
+// Endpoint para excluir produtos
+app.delete('/produtos/:id', (req, res) => {
+    const id = parseInt(req.params.id); // Obtém o ID do produto a ser excluído
+
+    fs.readFile(produtosFilePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Erro ao ler arquivo de produtos');
+        }
+
+        let produtos = JSON.parse(data);
+        const produtosFiltrados = produtos.filter(produto => produto.id !== id); // Filtra o produto a ser excluído
+
+        // Verifica se o produto foi encontrado
+        if (produtos.length === produtosFiltrados.length) {
+            return res.status(404).send('Produto não encontrado'); // Retorna 404 se não encontrou
+        }
+
+        // Escreve o novo array de produtos no arquivo
+        fs.writeFile(produtosFilePath, JSON.stringify(produtosFiltrados, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send('Erro ao salvar produtos');
+            }
+            res.status(204).send(); // Retorna 204 No Content após exclusão
+        });
+    });
+});
 
 // Inicia o servidor
 const PORT = 5000;
