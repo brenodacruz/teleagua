@@ -1,77 +1,116 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors'); // Importa o pacote cors
+const cors = require('cors');
 
 const app = express();
-app.use(cors()); // Permite requisições CORS
-
-// Middleware para permitir o uso de JSON no corpo das requisições
+app.use(cors());
 app.use(express.json());
 
-// Caminho para o arquivo JSON
 const produtosFilePath = path.join(__dirname, '../src/produtos.json');
 
-// Endpoint para obter produtos
-app.get('/produtos', (req, res) => {
-    fs.readFile(produtosFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send('Erro ao ler arquivo de produtos');
-        }
-        res.send(JSON.parse(data));
+const lerProdutos = () => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(produtosFilePath, 'utf8', (err, data) => {
+            if (err) {
+                return reject('Erro ao ler arquivo de produtos');
+            }
+            resolve(JSON.parse(data));
+        });
     });
-});
+};
 
-// Endpoint para adicionar produtos
-app.post('/produtos', (req, res) => {
-    const novoProduto = req.body;
-
-    fs.readFile(produtosFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send('Erro ao ler arquivo de produtos');
-        }
-
-        let produtos = JSON.parse(data);
-        novoProduto.id = produtos.length + 1; // Adiciona ID ao novo produto
-        produtos.push(novoProduto);
-
+const escreverProdutos = (produtos) => {
+    return new Promise((resolve, reject) => {
         fs.writeFile(produtosFilePath, JSON.stringify(produtos, null, 2), (err) => {
             if (err) {
-                return res.status(500).send('Erro ao salvar produto');
+                return reject('Erro ao salvar produtos');
             }
-            res.status(201).send(novoProduto); // Retorna 201 Created
+            resolve();
         });
     });
+};
+
+app.get('/produtos', async (req, res) => {
+    try {
+        const produtos = await lerProdutos();
+        res.send(produtos);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
-// Endpoint para excluir produtos
-app.delete('/produtos/:id', (req, res) => {
-    const id = parseInt(req.params.id); // Obtém o ID do produto a ser excluído
+// Endpoint para obter um produto específico pelo ID
+app.get('/produtos/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
 
-    fs.readFile(produtosFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send('Erro ao ler arquivo de produtos');
+    try {
+        const produtos = await lerProdutos();
+        const produto = produtos.find(prod => prod.id === id);
+
+        if (!produto) {
+            return res.status(404).send('Produto não encontrado');
         }
 
-        let produtos = JSON.parse(data);
-        const produtosFiltrados = produtos.filter(produto => produto.id !== id); // Filtra o produto a ser excluído
+        res.send(produto);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
-        // Verifica se o produto foi encontrado
+app.post('/produtos', async (req, res) => {
+    const novoProduto = req.body;
+
+    try {
+        const produtos = await lerProdutos();
+        novoProduto.id = produtos.length + 1;
+        produtos.push(novoProduto);
+
+        await escreverProdutos(produtos);
+        res.status(201).send(novoProduto);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.put('/produtos/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const produtoAtualizado = req.body;
+
+    try {
+        const produtos = await lerProdutos();
+        const produtoIndex = produtos.findIndex(produto => produto.id === id);
+
+        if (produtoIndex === -1) {
+            return res.status(404).send('Produto não encontrado');
+        }
+
+        produtos[produtoIndex] = { id, ...produtoAtualizado };
+        await escreverProdutos(produtos);
+        res.send(produtos[produtoIndex]);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.delete('/produtos/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+
+    try {
+        const produtos = await lerProdutos();
+        const produtosFiltrados = produtos.filter(produto => produto.id !== id);
+
         if (produtos.length === produtosFiltrados.length) {
-            return res.status(404).send('Produto não encontrado'); // Retorna 404 se não encontrou
+            return res.status(404).send('Produto não encontrado');
         }
 
-        // Escreve o novo array de produtos no arquivo
-        fs.writeFile(produtosFilePath, JSON.stringify(produtosFiltrados, null, 2), (err) => {
-            if (err) {
-                return res.status(500).send('Erro ao salvar produtos');
-            }
-            res.status(204).send(); // Retorna 204 No Content após exclusão
-        });
-    });
+        await escreverProdutos(produtosFiltrados);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
-// Inicia o servidor
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);

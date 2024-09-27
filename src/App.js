@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import CadastrarProduto from './pages/CadastrarProduto';
 import CadastrarCliente from './pages/CadastrarCliente';
 import KeyboardNavigation from './pages/Atalhos';
+import EditarProduto from './pages/EditarProduto';
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/finalizar' element={<Finalizar />} />
           <Route path='/cadastrarproduto' element={<CadastrarProduto />} />
           <Route path='/cadastrarcliente' element={<CadastrarCliente />} />
+          <Route path='/editarproduto/:id' element={<EditarProduto />} />
         </Routes>
       </div>
     </Router>

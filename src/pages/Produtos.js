@@ -57,6 +57,7 @@ export default function Produtos() {
                 {produtos.map(produto => (
                     <ListaProdutos 
                         key={produto.id} // Usando o ID como chave
+                        id={produto.id} // Passando o ID para o componente ListaProdutos
                         texto={produto.nome} 
                         valor={produto.valor} 
                         estoque={produto.estoque} 

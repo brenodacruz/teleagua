@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "nome": "Água - Porta",
-    "valor": 15,
-    "estoque": 99
+    "nome": "testee",
+    "valor": 3,
+    "estoque": 5
   },
   {
     "id": 2,
@@ -13,8 +13,8 @@
   },
   {
     "id": 3,
-    "nome": "Água - Longe",
-    "valor": 19.53,
-    "estoque": 999
+    "nome": "Teste",
+    "valor": 40,
+    "estoque": 400
   }
 ]
