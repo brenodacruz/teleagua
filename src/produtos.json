@@ -16,5 +16,11 @@
     "nome": "Teste",
     "valor": 40,
     "estoque": 400
+  },
+  {
+    "id": 4,
+    "nome": "Agua",
+    "valor": 335,
+    "estoque": 555
   }
 ]

@@ -1,20 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom"; // Importando Link
+import { Link } from "react-router-dom"; 
 
 export default function ListaProdutos(props) {
     return (
         <div className="flex flex-row justify-between p-10 items-center bg-gray-200 w-full h-36 mt-5">
             <div className="flex flex-row gap-5 justify-start items-center">
-                <section className='flex flex-row gap-5 text-xl'>
-                    {/* Link para a página de edição */}
-                    <Link to={`/editarproduto/${props.id}`}> {/* Certifique-se que props.id está sendo passado corretamente */}
+                <section className='flex flex-row gap-5 text-xl items-center'>
+                    <Link to={`/editarproduto/${props.id}`}>
                         <FontAwesomeIcon icon={faPenToSquare} className='text-blue-600 cursor-pointer' />
                     </Link>
                     <FontAwesomeIcon 
                         icon={faTrash} 
                         className='text-red-600 cursor-pointer'
-                        onClick={props.onDelete} // Chama a função de exclusão
+                        onClick={props.onDelete}
                     />
                 </section>
                 <img src="../img/img.jpg" className="w-28 rounded-xl" alt={props.alt}></img>
