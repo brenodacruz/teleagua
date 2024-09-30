@@ -7,55 +7,60 @@ const KeyboardNavigation = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      // Verifica se o foco está em um campo de entrada
+      const isInputFocused = document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA';
+
+      // Se estiver em um campo de entrada, não faz nada
+      if (isInputFocused) return;
+
       switch (event.key) {
         case 'F1':
-        event.preventDefault(); // Bloqueia a ação padrão
-        navigate('/produtos'); // Redireciona para a página de produtos
-        break;
+          event.preventDefault();
+          navigate('/produtos');
+          break;
         case 'F2':
-          event.preventDefault(); // Bloqueia a ação padrão
-          navigate('/clientes'); // Redireciona para a página de clientes
+          event.preventDefault();
+          navigate('/clientes');
           break;
         case 'F3':
-          event.preventDefault(); // Bloqueia a ação padrão
-          navigate('/pagamento'); // Redireciona para a página de produtos
+          event.preventDefault();
+          navigate('/pagamento');
           break;
         case 'F4':
-          event.preventDefault(); // Bloqueia a ação padrão
-          navigate('/finalizar'); // Redireciona para a página de produtos
+          event.preventDefault();
+          navigate('/finalizar');
           break;
         case 'F5':
-          event.preventDefault(); // Bloqueia a ação padrão
-          navigate('/'); // Redireciona para a página de produtos
+          event.preventDefault();
+          navigate('/');
           break;
         case 'F6':
-          event.preventDefault(); // Bloqueia a ação padrão
-          if (location.pathname === '/produtos'){
+          event.preventDefault();
+          if (location.pathname === '/produtos') {
             navigate('/cadastrarproduto');
-          }
-          else if (location.pathname === '/clientes'){
+          } else if (location.pathname === '/clientes') {
             navigate('/cadastrarcliente');
           }
           break;
         case '1':
           event.preventDefault(); // Bloqueia a ação padrão
-          if (location.pathname === '/pagamento'){
+          if (location.pathname === '/pagamento') {
             navigate('/finalizar');
-            window.alert('Pix')
+            window.alert('Pix');
           }
           break;
         case '2':
           event.preventDefault(); // Bloqueia a ação padrão
-          if (location.pathname === '/pagamento'){
+          if (location.pathname === '/pagamento') {
             navigate('/finalizar');
-            window.alert('Dinheiro')
+            window.alert('Dinheiro');
           }
           break;
         case 'F10':
-          event.preventDefault(); // Bloqueia a ação padrão
-          if (location.pathname === '/finalizar'){
+          event.preventDefault();
+          if (location.pathname === '/finalizar') {
             navigate('/');
-            window.alert('Pedido Salvo com Sucesso!')
+            window.alert('Pedido Salvo com Sucesso!');
           }
           break;
         default:
@@ -70,7 +75,7 @@ const KeyboardNavigation = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   return null; // Este componente não renderiza nada
 };

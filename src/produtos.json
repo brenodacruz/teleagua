@@ -1,14 +1,26 @@
 [
   {
-    "nome": "Água- perto",
-    "valor": 88,
-    "estoque": 4444,
-    "id": 1
+    "id": 1,
+    "nome": "Água Perto",
+    "valor": 18,
+    "estoque": 999
   },
   {
+    "id": 2,
     "nome": "Água longe",
-    "valor": 56.5,
+    "valor": 19,
+    "estoque": 999
+  },
+  {
+    "nome": "Retirada",
+    "valor": 15,
     "estoque": 999,
-    "id": 2
+    "id": 3
+  },
+  {
+    "nome": "Galão 20L",
+    "valor": 24,
+    "estoque": 999,
+    "id": 4
   }
 ]
