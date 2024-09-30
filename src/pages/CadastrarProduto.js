@@ -27,28 +27,49 @@ export default function CadastrarProduto() {
             alert("Por favor, preencha todos os campos.");
             return;
         }
-
-        // Formata os valores
-        const produto = {
-            nome: novoProduto.nome,
-            valor: parseFloat(novoProduto.valor),
-            estoque: parseInt(novoProduto.estoque, 10),
-        };
-
+    
         try {
-            const response = await fetch('http://localhost:5000/produtos', {
+            // Faz uma requisição GET para obter a lista de produtos e determinar o próximo ID
+            const responseGet = await fetch('http://localhost:5000/produtos');
+            if (!responseGet.ok) {
+                throw new Error("Erro ao obter produtos");
+            }
+    
+            const produtosExistentes = await responseGet.json();
+    
+            // Cria um array apenas com os IDs existentes
+            const idsExistentes = produtosExistentes.map(p => p.id);
+            
+            let novoId = 1; // Começa a verificar IDs a partir de 1
+            while (idsExistentes.includes(novoId)) {
+                novoId++; // Incrementa até encontrar um ID que não esteja em uso
+            }
+            novoId = novoId-1
+    
+            console.log(`1- valor novoID: ${novoId}`);
+    
+            // Formata os valores
+            const produto = {
+                nome: novoProduto.nome,
+                valor: parseFloat(novoProduto.valor),
+                estoque: parseInt(novoProduto.estoque, 10),
+                id: novoId // Agora usando novoId garantido
+            };
+            console.log(`2- valor novoID: ${novoId}`);
+    
+            const responsePost = await fetch('http://localhost:5000/produtos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(produto),
             });
-
-            if (!response.ok) {
+    
+            if (!responsePost.ok) {
                 throw new Error("Erro ao adicionar produto");
             }
-
-            const data = await response.json();
+    
+            const data = await responsePost.json();
             setProdutos([...produtos, data]); // Atualiza a lista de produtos com o novo
             setNovoProduto({ nome: '', valor: '', estoque: '' }); // Limpa o formulário após adicionar
             console.log("Produto adicionado:", data); // Log do produto adicionado
@@ -56,7 +77,9 @@ export default function CadastrarProduto() {
             console.error("Erro ao adicionar produto:", error);
         }
     };
-
+    
+    
+    
     return (
         <div className="flex flex-col h-screen w-full justify-center items-center pl-[270px] pt-[68px] gap-10 bg-gray-300">
             <h1 className="text-5xl font-black">Cadastrar Novo Produto:</h1>

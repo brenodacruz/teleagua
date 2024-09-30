@@ -20,7 +20,7 @@ export default function Home(){
                 
 
                     <select id="selectInput" className="border-2 border-black p-2 row-start-1 col-start-2 self-center">
-                        <option value="opcao1">Porta - R$ 15</option>
+                        <option value="opcao1">Retirada - R$ 15</option>
                         <option value="opcao2">Entrega Perto</option>
                         <option value="opcao3">Entrega Longe</option>
                     </select>

@@ -63,7 +63,19 @@ app.post('/produtos', async (req, res) => {
 
     try {
         const produtos = await lerProdutos();
-        novoProduto.id = produtos.length + 1;
+        
+        // Cria um array apenas com os IDs existentes
+        const idsExistentes = produtos.map(p => p.id);
+        
+        // Inicializa o novo ID
+        let novoId = 1;
+
+        // Encontra um ID que não esteja em uso
+        while (idsExistentes.includes(novoId)) {
+            novoId++;
+        }
+
+        novoProduto.id = novoId; // Atribui o novo ID ao produto
         produtos.push(novoProduto);
 
         await escreverProdutos(produtos);
