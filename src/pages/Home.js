@@ -1,5 +1,36 @@
+import React, { useState, useEffect } from 'react';
 
-export default function Home(){
+export default function Home() {
+    const [produtos, setProdutos] = useState([]); // Definindo o estado
+
+    const buscarProdutos = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/produtos');
+            if (!response.ok) {
+                throw new Error('Erro ao buscar produto');
+            }
+    
+            const data = await response.json();
+    
+            // Extrair apenas nome e valor dos produtos
+            const produtosFiltrados = data.map(produto => ({
+                nome: produto.nome,
+                valor: produto.valor
+            }));
+    
+            console.log(produtosFiltrados); // Para verificar os dados filtrados
+            setProdutos(produtosFiltrados);
+        } catch (error) {
+            console.log("erro ao buscar produto: ", error);
+        }
+    };
+    
+    
+
+    useEffect(() => {
+        buscarProdutos(); // Chama a função ao montar o componente
+    }, []);
+
     return(
         <div className="grid grid-cols-2 h-screen w-screen pl-[270px]">
             <section className="flex flex-col justify-center items-center border-r-2 border-black">
@@ -20,9 +51,11 @@ export default function Home(){
                 
 
                     <select id="selectInput" className="border-2 border-black p-2 row-start-1 col-start-2 self-center">
-                        <option value="opcao1">Retirada - R$ 15</option>
-                        <option value="opcao2">Entrega Perto</option>
-                        <option value="opcao3">Entrega Longe</option>
+                        {
+                            produtos.map(produto => (
+                                <option key={produto.nome} value={produto.nome}>{produto.nome} - R$ {produto.valor}</option>
+                            ))
+                        }
                     </select>
                     <input type="number" className="border-2 border-black text-center row-start-2 col-start-2 self-center" placeholder="0"></input>
                     <span className="row-start-3 col-start-2 self-center">R$ 0.00</span>
