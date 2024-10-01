@@ -9,6 +9,7 @@ export default function Clientes() {
     const [clientes, setClientes] = useState([]); // Estado para armazenar os clientes
     const [loading, setLoading] = useState(true); // Estado para indicar se os dados estão sendo carregados
     const [selectedClienteId, setSelectedClienteId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState(''); // Estado para armazenar o termo de busca
 
     useEffect(() => {
         // Função para buscar clientes da API
@@ -44,6 +45,15 @@ export default function Clientes() {
         setSelectedClienteId(id); // Atualiza o ID do cliente selecionado
     };
 
+    // Filtra os clientes com base no termo de busca
+    const filteredClientes = clientes.filter(cliente => 
+        cliente.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        cliente.endereco.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        cliente.telefone1.includes(searchTerm) || // Inclui telefone1
+        (cliente.telefone2 && cliente.telefone2.includes(searchTerm)) || // Inclui telefone2 se existir
+        (cliente.telefone3 && cliente.telefone3.includes(searchTerm)) // Inclui telefone3 se existir
+    );
+
     return (
         <div className="flex flex-col h-screen w-full justify-start items-start pl-[270px] pt-[68px]">
             <div className="flex items-center border-2 border-black w-full h-10">
@@ -52,6 +62,8 @@ export default function Clientes() {
                     type="search"
                     placeholder="Busque por nome do cliente, endereço ou telefone"
                     className="flex-1 h-full border-none p-2"
+                    value={searchTerm} // Vincula o valor do input ao estado
+                    onChange={(e) => setSearchTerm(e.target.value)} // Atualiza o estado quando o valor mudar
                 />
             </div>
             <Link to='/cadastrarcliente' className="flex flex-row justify-between bg-gray-200 text-black w-full px-10 items-center gap-5 cursor-pointer hover:bg-gray-400 py-2">
@@ -67,7 +79,7 @@ export default function Clientes() {
             {loading ? (
                 <p>Carregando clientes...</p> // Mensagem de carregamento
             ) : (
-                clientes.map(cliente => (
+                filteredClientes.map(cliente => (
                     <div key={cliente.id} onClick={() => handleClienteSelect(cliente.id)} className="w-full">
                         <ClientesComp 
                             id={cliente.id} // Passa o id do cliente para exclusão
