@@ -3,10 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
+// Importa o roteador de clientes
+const clientesRouter = require('./serverClientes'); // Ajuste o caminho conforme necessário
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Rota para produtos
 const produtosFilePath = path.join(__dirname, '../src/produtos.json');
 
 const lerProdutos = () => {
@@ -31,6 +35,7 @@ const escreverProdutos = (produtos) => {
     });
 };
 
+// Endpoints para produtos
 app.get('/produtos', async (req, res) => {
     try {
         const produtos = await lerProdutos();
@@ -40,7 +45,6 @@ app.get('/produtos', async (req, res) => {
     }
 });
 
-// Endpoint para obter um produto específico pelo ID
 app.get('/produtos/:id', async (req, res) => {
     const id = parseInt(req.params.id);
 
@@ -63,19 +67,15 @@ app.post('/produtos', async (req, res) => {
 
     try {
         const produtos = await lerProdutos();
-        
-        // Cria um array apenas com os IDs existentes
         const idsExistentes = produtos.map(p => p.id);
         
-        // Inicializa o novo ID
         let novoId = 1;
 
-        // Encontra um ID que não esteja em uso
         while (idsExistentes.includes(novoId)) {
             novoId++;
         }
 
-        novoProduto.id = novoId; // Atribui o novo ID ao produto
+        novoProduto.id = novoId;
         produtos.push(novoProduto);
 
         await escreverProdutos(produtos);
@@ -123,6 +123,10 @@ app.delete('/produtos/:id', async (req, res) => {
     }
 });
 
+// Usar o roteador de clientes
+app.use('/clientes', clientesRouter);
+
+// Iniciar o servidor
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);

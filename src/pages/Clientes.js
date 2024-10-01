@@ -1,13 +1,32 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import  { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import ClientesComp from "../components/ClientesComp";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function Clientes() {
+    const [clientes, setClientes] = useState([]); // Estado para armazenar os clientes
+    const [loading, setLoading] = useState(true); // Estado para indicar se os dados estão sendo carregados
+
+    useEffect(() => {
+        // Função para buscar clientes da API
+        const fetchClientes = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/clientes'); // URL da API
+                setClientes(response.data); // Atualiza o estado com os dados recebidos
+                setLoading(false); // Indica que o carregamento foi concluído
+            } catch (error) {
+                console.error("Erro ao buscar clientes:", error);
+                setLoading(false); // Indica que o carregamento foi concluído, mesmo em caso de erro
+            }
+        };
+
+        fetchClientes(); // Chama a função para buscar os clientes
+    }, []); // O array vazio faz com que o efeito seja executado apenas uma vez ao montar o componente
+
     return (
         <div className="flex flex-col h-screen w-full justify-start items-start pl-[270px] pt-[68px]">
-            
             <div className="flex items-center border-2 border-black w-full h-10">
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 <input
@@ -17,25 +36,29 @@ export default function Clientes() {
                 />
             </div>
             <Link to='/cadastrarcliente' className="flex flex-row justify-between bg-gray-200 text-black w-full px-10 items-center gap-5 cursor-pointer hover:bg-gray-400 py-2">
-                    <h1>Cadastrar Novo Cliente (F6)</h1>
-                    <FontAwesomeIcon icon={faSquarePlus}/>
+                <h1>Cadastrar Novo Cliente (F6)</h1>
+                <FontAwesomeIcon icon={faSquarePlus} />
             </Link>
-            <div className="flex flex-row w-full bg-black text-white justify-between px-36">
-                <h1>Nome:</h1>
-                <h1>Endereço:</h1>
-                <h1>Telefone:</h1>
+            <div className="flex flex-row w-full bg-black text-white justify-between px-20">
+                <h1 className="w-52px text-center">Nome:</h1>
+                <h1 className="w-60px text-center">Endereço:</h1>
+                <h1 className="w-[480px] text-center">Telefone:</h1>
             </div>
             
-            <ClientesComp nome="Breno Henrique" endereço="Rua Potomaio 330, São Geraldo" telefone="99670-2929"/>
-            <ClientesComp nome="Caio Fontes" endereço="Rua Itaituba 287, São Geraldo" telefone="99789-9930"/>
-            <ClientesComp nome="Guilherme Asa Norte" endereço="Rua Caiçara, Boa vista" telefone="99405-3422"/>
-            <ClientesComp nome="Gilda Lopes Ribeiro da Silva" endereço="Rua Bobos 0, Nova zelandia" telefone="99999-2929"/>
-            <ClientesComp nome="Breno Henrique" endereço="Rua Potomaio 330, São Geraldo" telefone="99670-2929"/>
-            <ClientesComp nome="Caio Fontes" endereço="Rua Itaituba 287, São Geraldo" telefone="99789-9930"/>
-            <ClientesComp nome="Guilherme Asa Norte" endereço="Rua Caiçara, Boa vista" telefone="99405-3422"/>
-            <ClientesComp nome="Caio Fontes" endereço="Rua Itaituba 287, São Geraldo" telefone="99789-9930"/>
-
+            {loading ? (
+                <p>Carregando clientes...</p> // Mensagem de carregamento
+            ) : (
+                clientes.map(cliente => (
+                    <ClientesComp 
+                        key={cliente.id} // Adiciona uma chave única para cada cliente
+                        nome={cliente.nome} 
+                        endereço={cliente.endereco} 
+                        telefone1={cliente.telefone1}
+                        telefone2={cliente.telefone2}
+                        telefone3={cliente.telefone3}
+                    />
+                ))
+            )}
         </div>
-
-    )
+    );
 }
