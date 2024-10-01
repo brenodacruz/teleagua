@@ -12,6 +12,7 @@ import CadastrarProduto from './pages/CadastrarProduto';
 import CadastrarCliente from './pages/CadastrarCliente';
 import KeyboardNavigation from './pages/Atalhos';
 import EditarProduto from './pages/EditarProduto';
+import EditarCliente from './pages/EditarCliente';
 
 
 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/cadastrarproduto' element={<CadastrarProduto />} />
           <Route path='/cadastrarcliente' element={<CadastrarCliente />} />
           <Route path='/editarproduto/:id' element={<EditarProduto />} />
+          <Route path='/editarcliente/:id' element={<EditarCliente />} />
         </Routes>
       </div>
     </Router>

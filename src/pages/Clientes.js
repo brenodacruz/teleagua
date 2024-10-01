@@ -25,6 +25,20 @@ export default function Clientes() {
         fetchClientes(); // Chama a função para buscar os clientes
     }, []); // O array vazio faz com que o efeito seja executado apenas uma vez ao montar o componente
 
+    // Função para excluir um cliente
+    const deleteCliente = async (id) => {
+        const confirmDelete = window.confirm("Tem certeza que deseja excluir este cliente?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`http://localhost:5000/clientes/${id}`); // Chama a API para deletar o cliente
+                // Atualiza a lista de clientes após a exclusão
+                setClientes(clientes.filter(cliente => cliente.id !== id));
+            } catch (error) {
+                console.error("Erro ao deletar cliente:", error);
+            }
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen w-full justify-start items-start pl-[270px] pt-[68px]">
             <div className="flex items-center border-2 border-black w-full h-10">
@@ -51,11 +65,13 @@ export default function Clientes() {
                 clientes.map(cliente => (
                     <ClientesComp 
                         key={cliente.id} // Adiciona uma chave única para cada cliente
+                        id={cliente.id} // Passa o id do cliente para exclusão
                         nome={cliente.nome} 
                         endereço={cliente.endereco} 
                         telefone1={cliente.telefone1}
                         telefone2={cliente.telefone2}
                         telefone3={cliente.telefone3}
+                        onDelete={deleteCliente} // Passa a função de exclusão como propriedade
                     />
                 ))
             )}
