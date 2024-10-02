@@ -1,15 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import ClientesComp from "../components/ClientesComp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function Clientes() {
     const [clientes, setClientes] = useState([]); // Estado para armazenar os clientes
     const [loading, setLoading] = useState(true); // Estado para indicar se os dados estão sendo carregados
-    const [selectedClienteId, setSelectedClienteId] = useState(null);
     const [searchTerm, setSearchTerm] = useState(''); // Estado para armazenar o termo de busca
+    const navigate = useNavigate()
+    
 
     useEffect(() => {
         // Função para buscar clientes da API
@@ -41,9 +42,11 @@ export default function Clientes() {
         }
     };
 
-    const handleClienteSelect = (id) => {
-        setSelectedClienteId(id); // Atualiza o ID do cliente selecionado
+    const handleClienteSelect = (cliente) => {
+        // Passa todos os dados do cliente
+        navigate('/pedido', { state: { cliente } });
     };
+    
 
     // Filtra os clientes com base no termo de busca
     const filteredClientes = clientes.filter(cliente => 
@@ -75,12 +78,12 @@ export default function Clientes() {
                 <h1 className="w-60px text-center">Endereço:</h1>
                 <h1 className="w-[480px] text-center">Telefone:</h1>
             </div>
-            
+
             {loading ? (
                 <p>Carregando clientes...</p> // Mensagem de carregamento
             ) : (
                 filteredClientes.map(cliente => (
-                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente.id)} className="w-full">
+                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente)} className="w-full">
                         <ClientesComp 
                             id={cliente.id} // Passa o id do cliente para exclusão
                             nome={cliente.nome} 
@@ -89,7 +92,7 @@ export default function Clientes() {
                             telefone2={cliente.telefone2}
                             telefone3={cliente.telefone3}
                             onDelete={deleteCliente} // Passa a função de exclusão como propriedade
-                            isSelected={selectedClienteId === cliente.id}
+                            
                         />
                     </div>
                 ))

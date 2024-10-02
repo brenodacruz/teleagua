@@ -13,6 +13,7 @@ import CadastrarCliente from './pages/CadastrarCliente';
 import KeyboardNavigation from './pages/Atalhos';
 import EditarProduto from './pages/EditarProduto';
 import EditarCliente from './pages/EditarCliente';
+import PedidoContext from './layout/PedidoContext';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/cadastrarcliente' element={<CadastrarCliente />} />
           <Route path='/editarproduto/:id' element={<EditarProduto />} />
           <Route path='/editarcliente/:id' element={<EditarCliente />} />
+          <Route path='/pedido' element={<PedidoContext />} />
         </Routes>
       </div>
     </Router>
