@@ -46,6 +46,28 @@ export default function Produtos() {
         console.log("Produto adicionado:", produto.nome);
     };
 
+    const DiminuirProduto = (produto) => {
+        const produtoExistente = produtosSelecionados.find(item => item.id === produto.id);
+    
+        if (produtoExistente) {
+            if (produtoExistente.quantidade > 1) {
+                // Se a quantidade for maior que 1, decrementa a quantidade
+                setProdutosSelecionados(
+                    produtosSelecionados.map(item =>
+                        item.id === produto.id 
+                            ? { ...item, quantidade: item.quantidade - 1 }
+                            : item
+                    )
+                );
+            } else {
+                // Se a quantidade for 1, remove o produto da lista
+                setProdutosSelecionados(produtosSelecionados.filter(item => item.id !== produto.id));
+                console.log("Produto removido:", produto.nome);
+            }
+        }
+    };
+    
+
     // Função para excluir um produto da lista de selecionados
     const excluirProdutoSelecionado = (id) => {
         console.log(`Tentando excluir produto selecionado com ID: ${id}`);
@@ -93,6 +115,7 @@ export default function Produtos() {
                         quantidade={produto.quantidade}  // Exibe a quantidade do produto selecionado
                         onDelete={() => excluirProdutoSelecionado(produto.id)} // Passando a função de excluir
                         onClick={() => AdicionarProduto(produto)}
+                        onDiminuir={() => DiminuirProduto(produto)} // Adiciona o produto ao ser clicado
                     />
                 ))}
                 

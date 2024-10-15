@@ -8,6 +8,11 @@ export default function ProdutosSelecionados(props) {
             props.onDelete(); // Chama a função de exclusão
         }
     };
+    const handleDiminuir = () => {
+        if (props.onDiminuir) {
+            props.onDiminuir(); // Chama a função de exclusão
+        }
+    };
 
     return (
         <div className="flex flex-col justify-center items-center bg-blue-200 border-y-2 border-black w-[400px] h-36 mt-5">
@@ -24,7 +29,7 @@ export default function ProdutosSelecionados(props) {
                     <FontAwesomeIcon icon={faSquarePlus} onClick={props.onClick}/>
                 </p>
                 <p className='text-red-500 hover:text-red-600 cursor-pointer'>
-                    <FontAwesomeIcon icon={faSquareMinus} />
+                    <FontAwesomeIcon icon={faSquareMinus} onClick={handleDiminuir}/>
                 </p>
             </div>
         </div>
