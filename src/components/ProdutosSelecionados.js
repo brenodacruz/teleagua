@@ -21,7 +21,7 @@ export default function ProdutosSelecionados(props) {
                     <FontAwesomeIcon icon={faTrash} />
                 </p>
                 <p className='text-green-500 hover:text-green-600 cursor-pointer'>
-                    <FontAwesomeIcon icon={faSquarePlus} />
+                    <FontAwesomeIcon icon={faSquarePlus} onClick={props.onClick}/>
                 </p>
                 <p className='text-red-500 hover:text-red-600 cursor-pointer'>
                     <FontAwesomeIcon icon={faSquareMinus} />

@@ -92,6 +92,7 @@ export default function Produtos() {
                         valor={produto.valor} 
                         quantidade={produto.quantidade}  // Exibe a quantidade do produto selecionado
                         onDelete={() => excluirProdutoSelecionado(produto.id)} // Passando a função de excluir
+                        onClick={() => AdicionarProduto(produto)}
                     />
                 ))}
                 
