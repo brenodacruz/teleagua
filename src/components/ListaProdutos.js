@@ -24,7 +24,7 @@ export default function ListaProdutos(props) {
             </div>
             <div className="flex flex-row gap-10 items-center">
                 <p className="text-xl">R$ {parseFloat(props.valor).toFixed(2).replace(".", ",")}</p>
-                <input type="button" value=">" className='bg-green-500 w-20 h-10 rounded-lg font-black border-2 border-black'></input>
+                <input type="button" value=">" className='bg-green-500 w-20 h-10 rounded-lg font-black border-2 border-black' onClick={props.onClick}></input>
             </div>
         </div>
     );
