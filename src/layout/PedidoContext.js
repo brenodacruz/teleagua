@@ -1,7 +1,9 @@
+import NotaFiscal from "../components/Nota";
+
 export default function PedidoContext() {
     const cliente = JSON.parse(localStorage.getItem('cliente'));
     const produtosSelecionados = JSON.parse(localStorage.getItem('produtosSelecionados')) || []; // Recupera os produtos
-    const pagamento = JSON.parse(localStorage.getItem('pagamento')) || []; // Recupera os produtos
+    const pagamento = JSON.parse(localStorage.getItem('pagamento')) || []; // Recupera o pagamento
 
     return (
         <div className="flex h-screen w-full justify-center items-center pl-[270px] pt-[68px]">
@@ -18,6 +20,7 @@ export default function PedidoContext() {
                 ) : (
                     <p>Nenhum cliente selecionado.</p>
                 )}
+
                 <h1>Produtos Selecionados:</h1>
                 {produtosSelecionados.length > 0 ? (
                     produtosSelecionados.map(produto => (
@@ -28,6 +31,7 @@ export default function PedidoContext() {
                 ) : (
                     <p>Nenhum produto selecionado.</p>
                 )}
+
                 <h1>Forma de Pagamento</h1>
                 {pagamento ? (
                     <div>
@@ -36,6 +40,9 @@ export default function PedidoContext() {
                 ) : (
                     <p>Nenhuma forma de pagamento selecionada.</p>
                 )}
+
+                {/* Renderizando o componente NotaFiscal */}
+                <NotaFiscal cliente={cliente} produtos={produtosSelecionados} pagamento={pagamento} />
             </section>
         </div>
     );
