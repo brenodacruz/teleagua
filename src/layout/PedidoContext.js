@@ -1,8 +1,6 @@
-import { useLocation } from "react-router-dom";
-
 export default function PedidoContext() {
-    const location = useLocation();
-    const cliente = location.state?.cliente; // Acessa o objeto do cliente
+    const cliente = JSON.parse(localStorage.getItem('cliente'));
+    const produtosSelecionados = JSON.parse(localStorage.getItem('produtosSelecionados')) || []; // Recupera os produtos
 
     return (
         <div className="flex h-screen w-full justify-center items-center pl-[270px] pt-[68px]">
@@ -18,6 +16,16 @@ export default function PedidoContext() {
                     </div>
                 ) : (
                     <p>Nenhum cliente selecionado.</p>
+                )}
+                <h1>Produtos Selecionados:</h1>
+                {produtosSelecionados.length > 0 ? (
+                    produtosSelecionados.map(produto => (
+                        <div key={produto.id}>
+                            <p>{produto.nome} - Quantidade: {produto.quantidade}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>Nenhum produto selecionado.</p>
                 )}
             </section>
         </div>

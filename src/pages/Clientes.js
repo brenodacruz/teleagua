@@ -43,8 +43,8 @@ export default function Clientes() {
     };
 
     const handleClienteSelect = (cliente) => {
-        // Passa todos os dados do cliente
-        navigate('/pedido', { state: { cliente } });
+        localStorage.setItem('cliente', JSON.stringify(cliente)); // Armazena o cliente no localStorage
+        navigate('/pedido');
     };
     
 
