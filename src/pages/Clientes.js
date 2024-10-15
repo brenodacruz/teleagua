@@ -44,7 +44,7 @@ export default function Clientes() {
 
     const handleClienteSelect = (cliente) => {
         localStorage.setItem('cliente', JSON.stringify(cliente)); // Armazena o cliente no localStorage
-        navigate('/pedido');
+        navigate('/pagamento');
     };
     
 

@@ -1,6 +1,7 @@
 export default function PedidoContext() {
     const cliente = JSON.parse(localStorage.getItem('cliente'));
     const produtosSelecionados = JSON.parse(localStorage.getItem('produtosSelecionados')) || []; // Recupera os produtos
+    const pagamento = JSON.parse(localStorage.getItem('pagamento')) || []; // Recupera os produtos
 
     return (
         <div className="flex h-screen w-full justify-center items-center pl-[270px] pt-[68px]">
@@ -26,6 +27,14 @@ export default function PedidoContext() {
                     ))
                 ) : (
                     <p>Nenhum produto selecionado.</p>
+                )}
+                <h1>Forma de Pagamento</h1>
+                {pagamento ? (
+                    <div>
+                        <p>{pagamento}</p>
+                    </div>
+                ) : (
+                    <p>Nenhuma forma de pagamento selecionada.</p>
                 )}
             </section>
         </div>
