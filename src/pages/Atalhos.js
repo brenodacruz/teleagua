@@ -46,14 +46,18 @@ const KeyboardNavigation = () => {
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/pagamento') {
             navigate('/finalizar');
-            window.alert('Pix');
           }
           break;
         case '2':
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/pagamento') {
             navigate('/finalizar');
-            window.alert('Dinheiro');
+          }
+          break;
+        case 'Enter':
+          event.preventDefault(); // Bloqueia a ação padrão
+          if (location.pathname === '/dinheiro') {
+            navigate('/pedido');
           }
           break;
         case 'F10':

@@ -14,6 +14,7 @@ import KeyboardNavigation from './pages/Atalhos';
 import EditarProduto from './pages/EditarProduto';
 import EditarCliente from './pages/EditarCliente';
 import PedidoContext from './layout/PedidoContext';
+import Dinheiro from './pages/Dinheiro';
 
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='/editarproduto/:id' element={<EditarProduto />} />
           <Route path='/editarcliente/:id' element={<EditarCliente />} />
           <Route path='/pedido' element={<PedidoContext />} />
+          <Route path='/dinheiro' element={<Dinheiro />} />
         </Routes>
       </div>
     </Router>
