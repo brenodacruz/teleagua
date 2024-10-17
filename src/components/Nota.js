@@ -1,9 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+    
+
 
 export default function NotaFiscal({ cliente, produtos, pagamento, total, troco }) {
+    const navigate = useNavigate();
+
     const handleImprimir = () => {
         window.print(); // Chama a função de impressão do navegador
     };
+
+    const handleCancelar = () =>{
+        navigate('/')
+    }
 
     return (
         <div className="container">
@@ -65,10 +75,16 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                 </div>
             </div>
 
-            <div><h1>Teste</h1></div>
-            <button onClick={handleImprimir} className="imprimir">
-                Imprimir Nota
-            </button>
+            <section className='flex flex-col gap-5'>
+                <div className='flex flex-col gap-4'>
+                    <h1 className='text-6xl font-bold'>Finalizar Pedido</h1>
+                    <p>Para finalizar o pedido e imprimir a notinha só clicar no botão verde abaixo ou apertar a tecla "Enter"<br /> e para cancelar pedido basta apertar na tecla vermelha ou apertar a tecla "Esc"</p>
+                </div>
+                <div className='flex felx-row gap-5 justify-center'>
+                    <button onClick={handleImprimir} className="imprimir w-32 bg-green-400 px-5 py-2 rounded-xl">Imprimir Nota</button>
+                    <button onClick={handleCancelar} className=" w-32 bg-red-400 px-5 py-2 rounded-xl">Cancelar</button>
+                </div>
+            </section>
 
             <style jsx>{`
                 .nota {
@@ -81,14 +97,6 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                     position: relative;
                 }
 
-                .imprimir {
-                    margin-top: 20px;
-                    background-color: #000;
-                    color: #fff;
-                    border: none;
-                    padding: 10px;
-                    cursor: pointer;
-                }
 
                 /* Esconde a nota na visualização normal */
                 .hidden-impressao {
