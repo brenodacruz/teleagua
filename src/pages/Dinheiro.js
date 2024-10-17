@@ -2,6 +2,7 @@ import MoneyInput from "../components/MoneyInput";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function Dinheiro() {
     
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Dinheiro() {
     const handlePagina = () => {
         // Armazena o valor do dinheiro no localStorage
         localStorage.setItem('dinheiro', JSON.stringify(dinheiro));
-        navigate('/pedido');
+        navigate('/finalizar');
     }
 
     return (

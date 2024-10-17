@@ -1,19 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-    
-
+import { handleImprimir } from '../components/Impressao'; 
 
 export default function NotaFiscal({ cliente, produtos, pagamento, total, troco }) {
     const navigate = useNavigate();
 
-    const handleImprimir = () => {
-        window.print(); // Chama a função de impressão do navegador
+    const handleCancelar = () => {
+        navigate('/');
     };
-
-    const handleCancelar = () =>{
-        navigate('/')
-    }
 
     return (
         <div className="container">
@@ -28,11 +22,11 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
 
                 <div className='flex flex-col items-start w-full'>
                     {cliente ? (
-                            <div>
-                                <p><strong>Cliente:</strong> {cliente.nome}</p>
-                                <p><strong>Telefone 1:</strong> {cliente.telefone1}</p>
-                                {cliente.telefone2 && <p><strong>Telefone 2:</strong> {cliente.telefone2}</p>}
-                            </div>
+                        <div>
+                            <p><strong>Cliente:</strong> {cliente.nome}</p>
+                            <p><strong>Telefone 1:</strong> {cliente.telefone1}</p>
+                            {cliente.telefone2 && <p><strong>Telefone 2:</strong> {cliente.telefone2}</p>}
+                        </div>
                     ) : (
                         <p>Nenhum cliente selecionado.</p>
                     )}
@@ -60,13 +54,13 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                             <div>
                                 <p className='font-bold'>{pagamento}</p>
                                 <p>Total: R$ {total.toFixed(2).replace(".", ",")}</p>
-                                {pagamento === 'Dinheiro' && troco > 0 ? (<p>Troco: R$ {troco.toFixed(2).replace(".", ",")}</p> ) : (<p></p>)}
+                                {pagamento === 'Dinheiro' && troco > 0 ? (<p>Troco: R$ {troco.toFixed(2).replace(".", ",")}</p>) : (<p></p>)}
                             </div>
                         ) : (
                             <p>Nenhuma forma de pagamento selecionada.</p>
                         )}
                     </section>
-                    {pagamento === 'Pix' ?(<section><img src='/img/qrcode-pix.png' className='w-40'></img></section>) : (<p></p>)}
+                    {pagamento === 'Pix' ? (<section><img src='/img/qrcode-pix.png' alt='qrcode' className='w-40'></img></section>) : (<p></p>)}
                 </div>
                 <p className="my-5">____________________________________________</p>
                 <div className='flex flex-col items-center w-full gap-4'>
@@ -82,7 +76,7 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                 </div>
                 <div className='flex felx-row gap-5 justify-center'>
                     <button onClick={handleImprimir} className="imprimir w-32 bg-green-400 px-5 py-2 rounded-xl">Imprimir Nota</button>
-                    <button onClick={handleCancelar} className=" w-32 bg-red-400 px-5 py-2 rounded-xl">Cancelar</button>
+                    <button onClick={handleCancelar} className="w-32 bg-red-400 px-5 py-2 rounded-xl">Cancelar</button>
                 </div>
             </section>
 
@@ -96,7 +90,6 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                     font-family: Arial, sans-serif;
                     position: relative;
                 }
-
 
                 /* Esconde a nota na visualização normal */
                 .hidden-impressao {

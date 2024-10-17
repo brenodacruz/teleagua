@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { handleImprimir } from '../components/Impressao'; 
 
 const KeyboardNavigation = () => {
   const navigate = useNavigate();
@@ -38,8 +39,13 @@ const KeyboardNavigation = () => {
           event.preventDefault();
           if (location.pathname === '/produtos') {
             navigate('/cadastrarproduto');
-          } else if (location.pathname === '/clientes') {
+          } 
+          else if (location.pathname === '/clientes') {
             navigate('/cadastrarcliente');
+          }
+          else if (location.pathname === '/finalizar') {
+            navigate('/');
+            
           }
           break;
         case '1':
@@ -51,20 +57,16 @@ const KeyboardNavigation = () => {
         case '2':
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/pagamento') {
-            navigate('/finalizar');
+            navigate('/dinheiro');
           }
           break;
         case 'Enter':
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/dinheiro') {
-            navigate('/pedido');
+            navigate('/finalizar');
           }
-          break;
-        case 'F10':
-          event.preventDefault();
-          if (location.pathname === '/finalizar') {
-            navigate('/');
-            window.alert('Pedido Salvo com Sucesso!');
+          else if (location.pathname === '/finalizar') {
+            handleImprimir();
           }
           break;
         default:

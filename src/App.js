@@ -5,7 +5,6 @@ import Menu from "./layout/Menu";
 import Produtos from './pages/Produtos';
 import Clientes from './pages/Clientes';
 import Pagamento from './pages/Pagamento';
-import Finalizar from './pages/Finalizar';
 import Home from './pages/Home';
 
 import CadastrarProduto from './pages/CadastrarProduto';
@@ -32,12 +31,11 @@ function App() {
           <Route path='/produtos' element={<Produtos />} />
           <Route path='/clientes' element={<Clientes />} />
           <Route path='/pagamento' element={<Pagamento />} />
-          <Route path='/finalizar' element={<Finalizar />} />
           <Route path='/cadastrarproduto' element={<CadastrarProduto />} />
           <Route path='/cadastrarcliente' element={<CadastrarCliente />} />
           <Route path='/editarproduto/:id' element={<EditarProduto />} />
           <Route path='/editarcliente/:id' element={<EditarCliente />} />
-          <Route path='/pedido' element={<PedidoContext />} />
+          <Route path='/finalizar' element={<PedidoContext />} />
           <Route path='/dinheiro' element={<Dinheiro />} />
         </Routes>
       </div>

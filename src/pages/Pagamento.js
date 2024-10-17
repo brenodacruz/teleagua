@@ -16,7 +16,7 @@ export default function Pagamento() {
 
     const handlePagamentoSelect = (metodoPagamento) => {
         localStorage.setItem('pagamento', JSON.stringify(metodoPagamento)); // Armazena o método de pagamento no localStorage
-        {metodoPagamento == 'Dinheiro' ? (navigate('/dinheiro')) : (navigate('/pedido'))}
+        {metodoPagamento === 'Dinheiro' ? (navigate('/dinheiro')) : (navigate('/finalizar'))}
     };
 
     return (
