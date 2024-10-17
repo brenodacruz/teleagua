@@ -1,17 +1,20 @@
 import React from 'react';
 
-export default function NotaFiscal({ cliente, produtos, pagamento }) {
+export default function NotaFiscal({ cliente, produtos, pagamento, total }) {
     const handleImprimir = () => {
         window.print(); // Chama a função de impressão do navegador
     };
-
+    
     return (
         <div className="nota">
-            <h1>Nota Fiscal</h1>
-            <h2>Cliente</h2>
+            <h1>COMPROVANTE DO PEDIDO</h1>
+            <h1>TELE-AGUA MINERAL</h1>
+            <h2>Vicente Risola 834 - Santa Inês</h2>
+            <h2>CNPJ: 52.642.660/0001-70</h2>
+            <p>_____________________________</p>
             {cliente ? (
                 <div>
-                    <p><strong>Nome:</strong> {cliente.nome}</p>
+                    <p><strong>Cliente:</strong> {cliente.nome}</p>
                     <p><strong>Endereço:</strong> {cliente.endereco}</p>
                     <p><strong>Telefone 1:</strong> {cliente.telefone1}</p>
                     {cliente.telefone2 && <p><strong>Telefone 2:</strong> {cliente.telefone2}</p>}
@@ -20,8 +23,9 @@ export default function NotaFiscal({ cliente, produtos, pagamento }) {
             ) : (
                 <p>Nenhum cliente selecionado.</p>
             )}
+            <p>_____________________________</p>
             
-            <h2>Produtos Selecionados</h2>
+            <h2>Produtos Selecionados: </h2>
             {produtos.length > 0 ? (
                 produtos.map(produto => (
                     <div key={produto.id}>
@@ -32,9 +36,13 @@ export default function NotaFiscal({ cliente, produtos, pagamento }) {
                 <p>Nenhum produto selecionado.</p>
             )}
 
+            <p>_____________________________</p>
             <h2>Forma de Pagamento</h2>
             {pagamento ? (
-                <p>{pagamento}</p>
+                <div>
+                    <p>{pagamento}</p>
+                    <p>Total: R$ {total.toFixed(2).replace(".", ",")}</p>
+                </div>
             ) : (
                 <p>Nenhuma forma de pagamento selecionada.</p>
             )}

@@ -125,6 +125,7 @@ export default function Produtos() {
                         onDelete={() => excluirProdutoSelecionado(produto.id)} 
                         onClick={() => AdicionarProduto(produto)}
                         onDiminuir={() => DiminuirProduto(produto)} 
+                        total={calcularTotal()}
                     />
                 ))}
                 
