@@ -22,11 +22,5 @@
     "valor": 24,
     "estoque": 999,
     "id": 4
-  },
-  {
-    "id": 5,
-    "nome": "Guilherme",
-    "valor": 999999,
-    "estoque": 1
   }
 ]

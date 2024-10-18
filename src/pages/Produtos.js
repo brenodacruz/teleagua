@@ -37,7 +37,7 @@ export default function Produtos() {
         if (produtoExistente) {
             // Incrementa a quantidade se o produto já existe
             novosSelecionados = produtosSelecionados.map(item =>
-                item.id === produto.id 
+                item.id === produto.id
                     ? { ...item, quantidade: item.quantidade + 1 }
                     : item
             );
@@ -60,7 +60,7 @@ export default function Produtos() {
             if (produtoExistente.quantidade > 1) {
                 // Decrementa a quantidade
                 novosSelecionados = produtosSelecionados.map(item =>
-                    item.id === produto.id 
+                    item.id === produto.id
                         ? { ...item, quantidade: item.quantidade - 1 }
                         : item
                 );
@@ -74,6 +74,29 @@ export default function Produtos() {
         setProdutosSelecionados(novosSelecionados);
         localStorage.setItem('produtosSelecionados', JSON.stringify(novosSelecionados)); // Atualiza o localStorage
     };
+
+    // Função para excluir um produto da lista de produtos
+    const excluirProduto = async (id) => {
+        console.log(`Tentando excluir produto da lista geral com ID: ${id}`);
+
+        try {
+            const response = await fetch(`http://localhost:5000/produtos/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Remove o produto da lista localmente
+                const novosProdutos = produtos.filter(produto => produto.id !== id);
+                setProdutos(novosProdutos);
+                console.log(`Produto com ID ${id} removido da lista de produtos.`);
+            } else {
+                console.error(`Erro ao excluir produto com ID ${id}`);
+            }
+        } catch (error) {
+            console.error(`Erro ao tentar excluir o produto: ${error}`);
+        }
+    };
+
 
     // Função para excluir um produto da lista de selecionados
     const excluirProdutoSelecionado = (id) => {
@@ -99,36 +122,36 @@ export default function Produtos() {
 
                 {/* Renderizando a lista de produtos */}
                 {produtos.map(produto => (
-                    <ListaProdutos 
+                    <ListaProdutos
                         key={produto.id}
                         id={produto.id}
-                        texto={produto.nome} 
-                        valor={produto.valor} 
-                        estoque={produto.estoque} 
-                        alt="Icone" 
-                        onDelete={() => excluirProdutoSelecionado(produto.id)} 
-                        onClick={() => AdicionarProduto(produto)} 
+                        texto={produto.nome}
+                        valor={produto.valor}
+                        estoque={produto.estoque}
+                        alt="Icone"
+                        onDelete={() => excluirProduto(produto.id)} // Excluir da lista de produtos
+                        onClick={() => AdicionarProduto(produto)}
                     />
                 ))}
             </section>
-            
+
             <section className="flex flex-col items-center justify-start">
                 <h1 className="text-4xl mt-10">Selecionados:</h1>
-                
+
                 {/* Renderizando produtos selecionados */}
                 {produtosSelecionados.map(produto => (
-                    <ProdutosSelecionados 
-                        key={produto.id} 
-                        produto={produto.nome} 
-                        valor={produto.valor} 
-                        quantidade={produto.quantidade} 
-                        onDelete={() => excluirProdutoSelecionado(produto.id)} 
+                    <ProdutosSelecionados
+                        key={produto.id}
+                        produto={produto.nome}
+                        valor={produto.valor}
+                        quantidade={produto.quantidade}
+                        onDelete={() => excluirProdutoSelecionado(produto.id)} // Excluir da lista de selecionados
                         onClick={() => AdicionarProduto(produto)}
-                        onDiminuir={() => DiminuirProduto(produto)} 
+                        onDiminuir={() => DiminuirProduto(produto)}
                         total={calcularTotal()}
                     />
                 ))}
-                
+
                 <h1 className="text-4xl mt-10">Total: R$ {calcularTotal().toFixed(2).replace(".", ",")}</h1>
 
                 <img src="../img/giff-galao.gif" alt="Gif do Galão" />
