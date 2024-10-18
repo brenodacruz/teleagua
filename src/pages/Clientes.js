@@ -10,6 +10,8 @@ export default function Clientes() {
     const [loading, setLoading] = useState(true); // Estado para indicar se os dados estão sendo carregados
     const [searchTerm, setSearchTerm] = useState(''); // Estado para armazenar o termo de busca
     const navigate = useNavigate()
+    const [selectedClienteId, setSelectedClienteId] = useState(null); // Estado para armazenar o cliente selecionado
+
     
 
     useEffect(() => {
@@ -24,9 +26,16 @@ export default function Clientes() {
                 setLoading(false); // Indica que o carregamento foi concluído, mesmo em caso de erro
             }
         };
-
+    
+        // Restaurar o cliente selecionado do localStorage
+        const savedSelectedClienteId = localStorage.getItem('selectedClienteId');
+        if (savedSelectedClienteId) {
+            setSelectedClienteId(parseInt(savedSelectedClienteId)); // Atualiza o estado com o ID recuperado
+        }
+    
         fetchClientes(); // Chama a função para buscar os clientes
     }, []); // O array vazio faz com que o efeito seja executado apenas uma vez ao montar o componente
+    
 
     // Função para excluir um cliente
     const deleteCliente = async (id) => {
@@ -44,8 +53,11 @@ export default function Clientes() {
 
     const handleClienteSelect = (cliente) => {
         localStorage.setItem('cliente', JSON.stringify(cliente)); // Armazena o cliente no localStorage
+        localStorage.setItem('selectedClienteId', cliente.id); // Armazena o ID do cliente selecionado
+        setSelectedClienteId(cliente.id); // Atualiza o estado com o ID do cliente selecionado
         navigate('/pagamento');
     };
+    
     
 
     // Filtra os clientes com base no termo de busca
@@ -83,7 +95,7 @@ export default function Clientes() {
                 <p>Carregando clientes...</p> // Mensagem de carregamento
             ) : (
                 filteredClientes.map(cliente => (
-                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente)} className="w-full">
+                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente)}  className={`w-full ${selectedClienteId === cliente.id ? 'border-2 border-black' : ''}`}>
                         <ClientesComp 
                             id={cliente.id} // Passa o id do cliente para exclusão
                             nome={cliente.nome} 
