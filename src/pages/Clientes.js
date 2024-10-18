@@ -4,6 +4,7 @@ import ClientesComp from "../components/ClientesComp";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { updateLocalStorage } from '../components/localStorageUtils';
 
 export default function Clientes() {
     const [clientes, setClientes] = useState([]); // Estado para armazenar os clientes
@@ -54,6 +55,7 @@ export default function Clientes() {
     const handleClienteSelect = (cliente) => {
         localStorage.setItem('cliente', JSON.stringify(cliente)); // Armazena o cliente no localStorage
         localStorage.setItem('selectedClienteId', cliente.id); // Armazena o ID do cliente selecionado
+        updateLocalStorage('cliente', cliente)
         setSelectedClienteId(cliente.id); // Atualiza o estado com o ID do cliente selecionado
         navigate('/pagamento');
     };

@@ -2,9 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPix } from '@fortawesome/free-brands-svg-icons';
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { updateLocalStorage } from '../components/localStorageUtils';
 
 export const handlePagamentoSelect = (metodoPagamento, navigate) => {
     localStorage.setItem('pagamento', JSON.stringify(metodoPagamento)); // Armazena o método de pagamento no localStorage
+    updateLocalStorage('pagamento', metodoPagamento)
+
     if (metodoPagamento === 'Dinheiro') {
         navigate('/dinheiro');
     } else {
@@ -16,7 +19,7 @@ export default function Pagamento() {
     const navigate = useNavigate();
 
     const handlePix = () => {
-        handlePagamentoSelect('Pix', navigate); // Passa diretamente o valor 'Pix' e a função navigate
+        handlePagamentoSelect('Pix', navigate);
     };
 
     const handleDinheiro = () => {

@@ -31,6 +31,7 @@ const KeyboardNavigation = () => {
         case 'F4':
           event.preventDefault();
           navigate('/finalizar');
+          window.location.reload()
           break;
         case 'F5':
           event.preventDefault();
@@ -53,6 +54,7 @@ const KeyboardNavigation = () => {
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/pagamento') {
             handlePagamentoSelect('Pix', navigate)
+            window.location.reload()
           }
           break;
           case '2':

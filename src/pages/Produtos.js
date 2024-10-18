@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { updateLocalStorage } from '../components/localStorageUtils';
 
 export default function Produtos() {
     const [produtos, setProdutos] = useState([]);
@@ -47,6 +48,7 @@ export default function Produtos() {
         }
 
         setProdutosSelecionados(novosSelecionados);
+        updateLocalStorage('produtosSelecionados', produtosSelecionados)
         localStorage.setItem('produtosSelecionados', JSON.stringify(novosSelecionados)); // Atualiza o localStorage
         console.log("Produto adicionado:", produto.nome);
     };
@@ -68,6 +70,7 @@ export default function Produtos() {
                 // Remove o produto se a quantidade for 1
                 novosSelecionados = produtosSelecionados.filter(item => item.id !== produto.id);
                 console.log("Produto removido:", produto.nome);
+
             }
         }
 
