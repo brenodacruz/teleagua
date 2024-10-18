@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { handleImprimir } from '../components/Impressao'; 
+import {handlePagamentoSelect} from './Pagamento'
 
 const KeyboardNavigation = () => {
   const navigate = useNavigate();
@@ -51,13 +52,13 @@ const KeyboardNavigation = () => {
         case '1':
           event.preventDefault(); // Bloqueia a ação padrão
           if (location.pathname === '/pagamento') {
-            navigate('/finalizar');
+            handlePagamentoSelect('Pix', navigate)
           }
           break;
-        case '2':
-          event.preventDefault(); // Bloqueia a ação padrão
-          if (location.pathname === '/pagamento') {
-            navigate('/dinheiro');
+          case '2':
+            event.preventDefault(); // Bloqueia a ação padrão
+            if (location.pathname === '/pagamento') {
+              handlePagamentoSelect('Dinheiro', navigate)
           }
           break;
         case 'Enter':
