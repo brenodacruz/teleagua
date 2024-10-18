@@ -7,6 +7,10 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
 
     const handleCancelar = () => {
         navigate('/');
+        localStorage.removeItem('cliente');
+        localStorage.removeItem('produtosSelecionados');
+        localStorage.removeItem('pagamento');
+        localStorage.removeItem('selectedClienteId');
     };
 
     return (
@@ -23,8 +27,8 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                 <div className='flex flex-col items-start w-full'>
                     {cliente ? (
                         <div>
-                            <p><strong>Cliente:</strong> {cliente.nome}</p>
-                            <p><strong>Telefone 1:</strong> {cliente.telefone1}</p>
+                            <p><strong>Cliente:</strong> {cliente.nome || "Nome não disponível"}</p>
+                            <p><strong>Telefone 1:</strong> {cliente.telefone1 || "Telefone não disponível"}</p>
                             {cliente.telefone2 && <p><strong>Telefone 2:</strong> {cliente.telefone2}</p>}
                         </div>
                     ) : (
@@ -35,7 +39,7 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
 
                 <div className='flex flex-col items-start'>
                     <h2 className='font-bold'>Produtos Selecionados:</h2>
-                    {produtos.length > 0 ? (
+                    {produtos && produtos.length > 0 ? (
                         produtos.map(produto => (
                             <div key={produto.id}>
                                 <p className='mt-4 text-3xl'>{produto.nome} / Quantidade: {produto.quantidade} / Valor: R$ {produto.valor.toFixed(2).replace(".", ",")}</p>
@@ -65,7 +69,7 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                 <p className="my-5">____________________________________________</p>
                 <div className='flex flex-col items-center w-full gap-4'>
                     <h1>Endereço:</h1>
-                    <h1 className='font-bold w-auto text-[100%] items-center text-center'>{cliente.endereco}</h1>
+                    <h1 className='font-bold w-auto text-[100%] items-center text-center'>{cliente ? cliente.endereco : "Endereço não disponível"}</h1>
                 </div>
             </div>
 
@@ -74,7 +78,7 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                     <h1 className='text-6xl font-bold'>Finalizar Pedido</h1>
                     <p>Para finalizar o pedido e imprimir a notinha só clicar no botão verde abaixo ou apertar a tecla "Enter"<br /> e para cancelar pedido basta apertar na tecla vermelha ou apertar a tecla "Esc"</p>
                 </div>
-                <div className='flex felx-row gap-5 justify-center'>
+                <div className='flex flex-row gap-5 justify-center'>
                     <button onClick={handleImprimir} className="imprimir w-32 bg-green-400 px-5 py-2 rounded-xl">Imprimir Nota</button>
                     <button onClick={handleCancelar} className="w-32 bg-red-400 px-5 py-2 rounded-xl">Cancelar</button>
                 </div>
