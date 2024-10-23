@@ -55,12 +55,12 @@ export default function Home() {
     return (
         <div className="grid grid-cols-2 h-screen w-screen pl-[270px]">
             <section className="flex flex-col justify-center items-center border-r-2 border-black">
-                <h1 className="font-black text-7xl">QRcode Pix</h1>
-                <h2 className="font-light">CNPJ: 52-642.660/0001-70</h2>
+                <h1 className="font-black 2xl:text-6xl text-5xl">QRcode Pix</h1>
+                <h2 className="font-bold">CNPJ: 52-642.660/0001-70</h2>
                 <img src="../img/qrcode-pix.png" alt="QR Code Pix" />
             </section>
             <section className="flex flex-col justify-center items-center gap-10">
-                <h1 className="font-black text-7xl">Calcular troco rápido</h1>
+                <h1 className="font-black 2xl:text-6xl text-5xl">Calcular troco rápido</h1>
 
                 <section className="grid grid-cols-2 grid-rows-5 border-2 border-black p-10 rounded-xl">
                     <label htmlFor="selectInput" className="row-start-1 col-start-1 self-center">Escolha o produto:</label>

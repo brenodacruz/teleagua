@@ -15,7 +15,7 @@ export default function ProdutosSelecionados(props) {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center bg-blue-200 border-y-2 border-black w-[400px] h-36 mt-5">
+        <div className="flex flex-col justify-center items-center bg-blue-200 border-y-2 border-black xl:w-[400px] h-36 mt-5 w-[300px]">
             <div className="flex flex-row justify-center items-center gap-5 mb-5 font-black text-lg">
                 <h1 className="border-r-2 pr-5 border-black">{props.produto}</h1>
                 <h1 className="border-r-2 pr-5 border-black">R$ {props.valor.toFixed(2).replace(".", ",")}</h1>

@@ -139,7 +139,7 @@ export default function Produtos() {
             </section>
 
             <section className="flex flex-col items-center justify-start">
-                <h1 className="text-4xl mt-10">Selecionados:</h1>
+                <h1 className="xl:text-4xl text-3xl mt-10">Selecionados:</h1>
 
                 {/* Renderizando produtos selecionados */}
                 {produtosSelecionados.map(produto => (
@@ -155,9 +155,9 @@ export default function Produtos() {
                     />
                 ))}
 
-                <h1 className="text-4xl mt-10">Total: R$ {calcularTotal().toFixed(2).replace(".", ",")}</h1>
+                <h1 className="xl:text-4xl text-3xl mt-10">Total: R$ {calcularTotal().toFixed(2).replace(".", ",")}</h1>
 
-                <img src="../img/giff-galao.gif" alt="Gif do Galão" />
+                <img src="../img/giff-galao.gif" alt="Gif do Galão" className="w-52 xl:w-auto"/>
             </section>
         </div>
     );

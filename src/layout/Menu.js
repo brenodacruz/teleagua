@@ -4,7 +4,7 @@ import { faDroplet } from '@fortawesome/free-solid-svg-icons';
 
 export default function Menu() {
     return (
-        <div className="flex flex-col bg-blue-950 fixed h-lvh gap-12 top-0 left-0 py-10">
+        <div className="flex flex-col bg-blue-950 fixed h-lvh gap-10 top-0 left-0 py-10 xl:gap-12">
             <section className="text-white flex flex-row gap-5 px-10">
                 <div className="flex justify-center items-center">
                     <FontAwesomeIcon icon={faDroplet} className="text-4xl" />
