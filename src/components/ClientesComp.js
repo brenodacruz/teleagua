@@ -21,6 +21,7 @@ export default function ClientesComp(props) {
             <div className="flex flex-row justify-between w-full items-center">
                 <h1 className="w-52">{props.nome}</h1>
                 <h1 className="w-60">{props.endereço}</h1>
+                <h1 className="w-60">{props.data}</h1>
                 <div className="flex flex-row gap-1">
                     <h1 className="w-40 text-center">{props.telefone1}</h1>
                     <h1 className="w-40 text-center">{props.telefone2 ? props.telefone2 : 'Null'}</h1>

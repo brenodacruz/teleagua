@@ -10,10 +10,8 @@ export default function Clientes() {
     const [clientes, setClientes] = useState([]); // Estado para armazenar os clientes
     const [loading, setLoading] = useState(true); // Estado para indicar se os dados estão sendo carregados
     const [searchTerm, setSearchTerm] = useState(''); // Estado para armazenar o termo de busca
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [selectedClienteId, setSelectedClienteId] = useState(null); // Estado para armazenar o cliente selecionado
-
-    
 
     useEffect(() => {
         // Função para buscar clientes da API
@@ -27,16 +25,15 @@ export default function Clientes() {
                 setLoading(false); // Indica que o carregamento foi concluído, mesmo em caso de erro
             }
         };
-    
+
         // Restaurar o cliente selecionado do localStorage
         const savedSelectedClienteId = localStorage.getItem('selectedClienteId');
         if (savedSelectedClienteId) {
             setSelectedClienteId(parseInt(savedSelectedClienteId)); // Atualiza o estado com o ID recuperado
         }
-    
+
         fetchClientes(); // Chama a função para buscar os clientes
     }, []); // O array vazio faz com que o efeito seja executado apenas uma vez ao montar o componente
-    
 
     // Função para excluir um cliente
     const deleteCliente = async (id) => {
@@ -55,12 +52,10 @@ export default function Clientes() {
     const handleClienteSelect = (cliente) => {
         localStorage.setItem('cliente', JSON.stringify(cliente)); // Armazena o cliente no localStorage
         localStorage.setItem('selectedClienteId', cliente.id); // Armazena o ID do cliente selecionado
-        updateLocalStorage('cliente', cliente)
+        updateLocalStorage('cliente', cliente);
         setSelectedClienteId(cliente.id); // Atualiza o estado com o ID do cliente selecionado
         navigate('/pagamento');
     };
-    
-    
 
     // Filtra os clientes com base no termo de busca
     const filteredClientes = clientes.filter(cliente => 
@@ -70,6 +65,16 @@ export default function Clientes() {
         (cliente.telefone2 && cliente.telefone2.includes(searchTerm)) || // Inclui telefone2 se existir
         (cliente.telefone3 && cliente.telefone3.includes(searchTerm)) // Inclui telefone3 se existir
     );
+
+    function formatDate(dateString) {
+        const date = new Date(dateString); // Converte a string em um objeto Date
+        const day = String(date.getDate()).padStart(2, '0'); // Obtém o dia e adiciona zero à esquerda se necessário
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Obtém o mês (começa em 0) e adiciona zero à esquerda
+        const year = date.getFullYear(); // Obtém o ano
+    
+        return `${day}/${month}/${year}`; // Retorna a data formatada
+    }
+    
 
     return (
         <div className="flex flex-col h-screen w-full justify-start items-start pl-[270px] pt-[68px]">
@@ -90,6 +95,7 @@ export default function Clientes() {
             <div className="flex flex-row w-full bg-black text-white justify-between px-20">
                 <h1 className="w-52px text-center">Nome:</h1>
                 <h1 className="w-60px text-center">Endereço:</h1>
+                <h1 className="w-60px text-center">Última compra:</h1> {/* Cabeçalho para a nova coluna */}
                 <h1 className="w-[480px] text-center">Telefone:</h1>
             </div>
 
@@ -97,7 +103,7 @@ export default function Clientes() {
                 <p>Carregando clientes...</p> // Mensagem de carregamento
             ) : (
                 filteredClientes.map(cliente => (
-                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente)}  className={`w-full ${selectedClienteId === cliente.id ? 'border-2 border-black' : ''}`}>
+                    <div key={cliente.id} onClick={() => handleClienteSelect(cliente)} className={`w-full ${selectedClienteId === cliente.id ? 'border-2 border-black' : ''}`}>
                         <ClientesComp 
                             id={cliente.id} // Passa o id do cliente para exclusão
                             nome={cliente.nome} 
@@ -105,8 +111,8 @@ export default function Clientes() {
                             telefone1={cliente.telefone1}
                             telefone2={cliente.telefone2}
                             telefone3={cliente.telefone3}
+                            data={formatDate(cliente.data_ultima_compra)} // Passa a data da última compra
                             onDelete={deleteCliente} // Passa a função de exclusão como propriedade
-                            
                         />
                     </div>
                 ))
