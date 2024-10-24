@@ -63,7 +63,8 @@ export default function Clientes() {
         cliente.endereco.toLowerCase().includes(searchTerm.toLowerCase()) ||
         cliente.telefone1.includes(searchTerm) || // Inclui telefone1
         (cliente.telefone2 && cliente.telefone2.includes(searchTerm)) || // Inclui telefone2 se existir
-        (cliente.telefone3 && cliente.telefone3.includes(searchTerm)) // Inclui telefone3 se existir
+        (cliente.telefone3 && cliente.telefone3.includes(searchTerm)) || // Inclui telefone3 se existir
+        (cliente.data_ultima_compra && cliente.data_ultima_compra.includes(searchTerm))
     );
 
     function formatDate(dateString) {
@@ -82,7 +83,7 @@ export default function Clientes() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 <input
                     type="search"
-                    placeholder="Busque por nome do cliente, endereço ou telefone"
+                    placeholder="Busque por nome do cliente, endereço, telefone ou data da última compra (ano-mês-dia)"
                     className="flex-1 h-full border-none p-2"
                     value={searchTerm} // Vincula o valor do input ao estado
                     onChange={(e) => setSearchTerm(e.target.value)} // Atualiza o estado quando o valor mudar
