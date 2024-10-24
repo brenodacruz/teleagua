@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleImprimir } from '../components/Impressao'; 
+import { handleImprimir } from '../components/Impressao';
 
 export default function NotaFiscal({ cliente, produtos, pagamento, total, troco }) {
     const navigate = useNavigate();
@@ -80,7 +80,7 @@ export default function NotaFiscal({ cliente, produtos, pagamento, total, troco 
                     <p>Para finalizar o pedido e imprimir a notinha só clicar no botão verde abaixo ou apertar a tecla "Enter"<br /> e para cancelar pedido basta apertar na tecla vermelha ou apertar a tecla "Esc"</p>
                 </div>
                 <div className='flex flex-row gap-5 justify-center'>
-                    <button onClick={handleImprimir} className="imprimir w-44 bg-green-400 px-5 py-2 rounded-xl">Imprimir Nota e Salvar</button>
+                    <button onClick={() => handleImprimir(cliente)} className="imprimir w-44 bg-green-400 px-5 py-2 rounded-xl">Imprimir Nota e Salvar</button>
                     <button onClick={handleCancelar} className="w-44 bg-red-400 px-5 py-2 rounded-xl">Limpar Pedido</button>
                 </div>
             </section>
